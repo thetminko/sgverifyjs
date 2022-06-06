@@ -1,20 +1,18 @@
-import { Logger } from './lib/Logger';
 import { MyInfo } from './lib/MyInfo';
 import { SgVerify } from './lib/SgVerify';
 import { SgVerifyOptions, SgVerifyGenerateQrCodeReq, MyInfoGetPersonReq, MyInfoGetPersonRes } from './types';
 import { CryptoUtil } from './util';
 
-export default class SgVerifyConnector {
-  private readonly logger?: Logger;
+export * from './types';
 
+export default class SgVerifyConnector {
   private readonly sgVerify: SgVerify;
 
   private readonly myInfo: MyInfo;
 
-  constructor(options: SgVerifyOptions, logger?: Logger) {
-    this.logger = logger;
-    this.sgVerify = new SgVerify(options, logger);
-    this.myInfo = new MyInfo(options, logger);
+  constructor(options: SgVerifyOptions) {
+    this.sgVerify = new SgVerify(options);
+    this.myInfo = new MyInfo(options);
   }
 
   /**
@@ -38,7 +36,6 @@ export default class SgVerifyConnector {
    * @returns string
    */
   generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): string {
-    this.logger?.info(`Generating QR code for [${req.state}]`);
     return this.sgVerify.generateQrCodeUrl(req);
   }
 
@@ -49,7 +46,6 @@ export default class SgVerifyConnector {
    * @returns Promise<{ data: SgVerifyPersonData, state: string }>
    */
   async getPersonaData(req: MyInfoGetPersonReq): Promise<MyInfoGetPersonRes> {
-    this.logger?.info(`Getting person data for state [${req.state}]`);
     const txNo = req.txNo ?? CryptoUtil.nonce(10);
     req.txNo = txNo;
     return this.myInfo.getPersonData(req);

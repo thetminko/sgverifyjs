@@ -1,7 +1,6 @@
 import jose from 'node-jose';
 import { SgVerifyOptions } from '../types';
 import { ApiUtil, CryptoUtil, QueryStringUtil } from '../util';
-import { Logger } from './Logger';
 
 const URL_CONFIG: {
   [key in 'PROD' | 'TEST']: {
@@ -77,8 +76,6 @@ export interface MyInfoGetPersonReq {
 }
 
 export class MyInfo {
-  private readonly logger?: Logger;
-
   private readonly options: SgVerifyOptions;
 
   private readonly default = {
@@ -87,8 +84,7 @@ export class MyInfo {
 
   private readonly env: 'PROD' | 'TEST';
 
-  constructor(options: SgVerifyOptions, logger?: Logger) {
-    this.logger = logger;
+  constructor(options: SgVerifyOptions) {
     this.env = options.isProduction ? 'PROD' : 'TEST';
     this.options = options;
   }
@@ -234,17 +230,12 @@ export class MyInfo {
   }
 
   async getPersonData(req: MyInfoGetPersonReq): Promise<MyInfoGetPersonRes> {
-    this.logger?.info(`Retrieving person data for [${req.state}] [${req.txNo}]`);
     try {
-      this.logger?.info(`Retrieving token for [${req.state}] [${req.txNo}]`);
       const {
         accessToken,
         decodedAccessToken: { sub: nricFin }
       } = await this.getToken(req.authCode, req.state);
 
-      this.logger?.info(`Retrieved token for [${req.state}] [${req.txNo}]`);
-
-      this.logger?.info(`Calling Person API for [${req.state}] [${req.txNo}]`);
       const method = 'GET';
       const params = {
         client_id: this.options.client.id,
@@ -265,8 +256,6 @@ export class MyInfo {
         proxy: this.options.proxy
       });
 
-      this.logger?.info(`Retrieved person data for [${req.state}] [${req.txNo}]`);
-
       const myInfoPerson: MyInfoPerson = this.parsePersonDataFromRes(await this.decryptJwe<MyInfoPersonData>(data));
 
       return {
@@ -274,7 +263,6 @@ export class MyInfo {
         state: req.state
       };
     } catch (err) {
-      this.logger?.error(`Unable to retrieve person data for state [${req.state}] [${req.txNo}]: [${err.message}]`);
       throw err;
     }
   }
