@@ -60,6 +60,7 @@ export class SgVerify {
       callbackUrl,
       client: { id: clientId }
     } = this.options;
+
     const config = URL_CONFIG[this.options.isProduction ? 'PROD' : 'TEST'];
 
     const now = new Date();
