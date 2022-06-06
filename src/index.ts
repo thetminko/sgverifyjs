@@ -4,7 +4,7 @@ import { SgVerify } from './lib/SgVerify';
 import { SgVerifyOptions, SgVerifyGenerateQrCodeReq, MyInfoGetPersonReq, MyInfoGetPersonRes } from './types';
 import { CryptoUtil } from './util';
 
-export class SgVerifyService {
+export default class SgVerifyConnector {
   private readonly logger?: Logger;
 
   private readonly sgVerify: SgVerify;

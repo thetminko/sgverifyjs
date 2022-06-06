@@ -1,5 +1,6 @@
-import { MyInfoPerson, MyInfoGetPersonReq, MyInfoGetPersonRes, MyInfoPersonAttributes } from 'src/lib/MyInfo';
-import { SgVerifyGenerateQrCodeReq, SgVerifyGenerateQrCodeRes } from 'src/lib/SgVerify';
+import { MyInfoPerson, MyInfoGetPersonReq, MyInfoGetPersonRes, MyInfoPersonAttributes } from '../lib/MyInfo';
+import { SgVerifyGenerateQrCodeReq, SgVerifyGenerateQrCodeRes } from '../lib/SgVerify';
+import { ProxyConfig } from '../util';
 
 export type {
   SgVerifyGenerateQrCodeReq,
@@ -46,10 +47,7 @@ export interface SgVerifyOptions {
   /**
    * Proxy
    */
-  proxy?: {
-    host: string;
-    port: number;
-  };
+  proxy?: ProxyConfig;
 
   /**
    * Setup attributes to retrieve from person data, you can override this value using the request parameter in getPersonData function

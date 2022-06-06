@@ -1,5 +1,7 @@
 import axios, { AxiosProxyConfig } from 'axios';
 
+export type ProxyConfig = AxiosProxyConfig | false;
+
 export interface FetchOptions {
   /**
    * Proxy
