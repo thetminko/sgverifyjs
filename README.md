@@ -1,5 +1,5 @@
 ```
-import SgVerifyConnector from 'src';
+import SgVerifyConnector from 'sgverifyjs';
 
 const sgVerify = new SgVerifyConnector({
   callbackUrl: '',
