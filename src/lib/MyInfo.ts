@@ -76,7 +76,7 @@ export interface MyInfoGetPersonReq {
   txNo: string;
 }
 
-export class MyInfoConnector {
+export class MyInfo {
   private readonly logger?: Logger;
 
   private readonly options: SgVerifyOptions;

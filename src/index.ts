@@ -1,5 +1,5 @@
 import { Logger } from './lib/Logger';
-import { MyInfoConnector } from './lib/MyInfo';
+import { MyInfo } from './lib/MyInfo';
 import { SgVerify } from './lib/SgVerify';
 import { SgVerifyOptions, SgVerifyGenerateQrCodeReq, MyInfoGetPersonReq, MyInfoGetPersonRes } from './types';
 import { CryptoUtil } from './util';
@@ -9,12 +9,12 @@ export class SgVerifyService {
 
   private readonly sgVerify: SgVerify;
 
-  private readonly myInfoConnector: MyInfoConnector;
+  private readonly myInfo: MyInfo;
 
   constructor(options: SgVerifyOptions, logger?: Logger) {
     this.logger = logger;
     this.sgVerify = new SgVerify(options, logger);
-    this.myInfoConnector = new MyInfoConnector(options, logger);
+    this.myInfo = new MyInfo(options, logger);
   }
 
   /**
@@ -52,6 +52,6 @@ export class SgVerifyService {
     this.logger?.info(`Getting person data for state [${req.state}]`);
     const txNo = req.txNo ?? CryptoUtil.nonce(10);
     req.txNo = txNo;
-    return this.myInfoConnector.getPersonData(req);
+    return this.myInfo.getPersonData(req);
   }
 }
