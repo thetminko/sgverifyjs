@@ -42,8 +42,8 @@ export default class SgVerifyConnector {
   /**
    * To retrieve the person data after the user has scanned the QR code and authenticated on SingPass
    *
-   * @param req SgVerifyGetPersonReq
-   * @returns Promise<{ data: SgVerifyPersonData, state: string }>
+   * @param req MyInfoGetPersonReq
+   * @returns Promise<MyInfoGetPersonRes>
    */
   async getPersonaData(req: MyInfoGetPersonReq): Promise<MyInfoGetPersonRes> {
     const txNo = req.txNo ?? CryptoUtil.nonce(10);
