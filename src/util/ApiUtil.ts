@@ -66,6 +66,8 @@ export class ApiUtil {
       });
 
       return response.data;
-    } catch (err) {}
+    } catch (err) {
+      throw err;
+    }
   }
 }

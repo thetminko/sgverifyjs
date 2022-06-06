@@ -35,7 +35,7 @@ export class SgVerify {
     signatureMethod: 'RS256'
   };
 
-  constructor(logger: Logger, options: SgVerifyOptions) {
+  constructor(options: SgVerifyOptions, logger?: Logger) {
     this.logger = logger;
     this.options = options;
   }
@@ -47,12 +47,12 @@ export class SgVerify {
    * @returns {string} signed url
    */
   private signUrl(url: string): string {
-    this.logger.info(`Signing URL: ${url}`);
+    this.logger?.info(`Signing URL: ${url}`);
     return `${url}&signature=${CryptoUtil.signWithRs256(url, this.options.privateKey)}`;
   }
 
   generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): SgVerifyGenerateQrCodeRes {
-    this.logger.info(`Generating QR Code Url [${JSON.stringify(req)}]`);
+    this.logger?.info(`Generating QR Code Url [${JSON.stringify(req)}]`);
 
     const { state, qrCodeExpiryInSec, qrType } = req;
 

@@ -234,17 +234,17 @@ export class MyInfoConnector {
   }
 
   async getPersonData(req: MyInfoGetPersonReq): Promise<MyInfoGetPersonRes> {
-    this.logger.info(`Retrieving person data for [${req.state}] [${req.txNo}]`);
+    this.logger?.info(`Retrieving person data for [${req.state}] [${req.txNo}]`);
     try {
-      this.logger.info(`Retrieving token for [${req.state}] [${req.txNo}]`);
+      this.logger?.info(`Retrieving token for [${req.state}] [${req.txNo}]`);
       const {
         accessToken,
         decodedAccessToken: { sub: nricFin }
       } = await this.getToken(req.authCode, req.state);
 
-      this.logger.info(`Retrieved token for [${req.state}] [${req.txNo}]`);
+      this.logger?.info(`Retrieved token for [${req.state}] [${req.txNo}]`);
 
-      this.logger.info(`Calling Person API for [${req.state}] [${req.txNo}]`);
+      this.logger?.info(`Calling Person API for [${req.state}] [${req.txNo}]`);
       const method = 'GET';
       const params = {
         client_id: this.options.client.id,
@@ -265,7 +265,7 @@ export class MyInfoConnector {
         proxy: this.options.proxy
       });
 
-      this.logger.info(`Retrieved person data for [${req.state}] [${req.txNo}]`);
+      this.logger?.info(`Retrieved person data for [${req.state}] [${req.txNo}]`);
 
       const myInfoPerson: MyInfoPerson = this.parsePersonDataFromRes(await this.decryptJwe<MyInfoPersonData>(data));
 
@@ -274,7 +274,7 @@ export class MyInfoConnector {
         state: req.state
       };
     } catch (err) {
-      this.logger.error(`Unable to retrieve person data for state [${req.state}] [${req.txNo}]: [${err.message}]`);
+      this.logger?.error(`Unable to retrieve person data for state [${req.state}] [${req.txNo}]: [${err.message}]`);
       throw err;
     }
   }
