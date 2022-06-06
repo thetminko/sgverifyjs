@@ -10,7 +10,7 @@ export interface SgVerifyGenerateQrCodeReq {
 export type SgVerifyGenerateQrCodeRes = string;
 
 const URL_CONFIG: {
-  [key in 'PROD' | 'TEST']: {
+  [key in 'PROD' | 'TEST' | 'SANDBOX']: {
     qrCodeUrl: string;
   };
 } = {
@@ -18,7 +18,10 @@ const URL_CONFIG: {
     qrCodeUrl: 'https://app.singpass.gov.sg/sgverify'
   },
   TEST: {
-    qrCodeUrl: 'https://app.singpass.gov.sg/sgverify'
+    qrCodeUrl: 'https://test.app.singpass.gov.sg/sgverify'
+  },
+  SANDBOX: {
+    qrCodeUrl: 'https://sandbox.app.singpass.sg/sgverify'
   }
 };
 
@@ -54,7 +57,7 @@ export class SgVerify {
       client: { id: clientId }
     } = this.options;
 
-    const config = URL_CONFIG[this.options.isProduction ? 'PROD' : 'TEST'];
+    const config = URL_CONFIG[this.options.environment];
 
     const now = new Date();
     const expiry = new Date();

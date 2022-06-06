@@ -40,9 +40,13 @@ export interface SgVerifyOptions {
   privateKey: string;
 
   /**
-   * Is for production usage or staging usage
+   * PROD and TEST are for PRODUCTION and STAGING environment respectively.
+   * These environments contain all necessary security features.
+   *
+   * SANDBOX is for testing during development.
+   * This environment does not contain security features. You should'nt use this for production and staging.
    */
-  isProduction: boolean;
+  environment: 'PROD' | 'TEST' | 'SANDBOX';
 
   /**
    * Proxy

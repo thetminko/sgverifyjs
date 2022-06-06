@@ -3,7 +3,7 @@ import { SgVerifyOptions } from '../types';
 import { ApiUtil, CryptoUtil, QueryStringUtil } from '../util';
 
 const URL_CONFIG: {
-  [key in 'PROD' | 'TEST']: {
+  [key in 'PROD' | 'TEST' | 'SANDBOX']: {
     tokenUrl: string;
     personUrl: string;
   };
@@ -15,6 +15,10 @@ const URL_CONFIG: {
   TEST: {
     tokenUrl: 'https://test.api.myinfo.gov.sg/sgverify/v2/token',
     personUrl: 'https://test.api.myinfo.gov.sg/sgverify/v2/person'
+  },
+  SANDBOX: {
+    tokenUrl: 'https://sandbox.api.myinfo.gov.sg/sgverify/v2/token',
+    personUrl: 'https://sandbox.api.myinfo.gov.sg/sgverify/v2/person'
   }
 };
 
@@ -82,11 +86,11 @@ export class MyInfo {
     signatureMethod: 'RS256'
   };
 
-  private readonly env: 'PROD' | 'TEST';
+  private readonly requireSecurityFeatures: boolean = true;
 
   constructor(options: SgVerifyOptions) {
-    this.env = options.isProduction ? 'PROD' : 'TEST';
     this.options = options;
+    this.requireSecurityFeatures = options.environment === 'PROD' || options.environment === 'TEST';
   }
 
   private sortJSON<T>(json: T): T {
@@ -176,7 +180,7 @@ export class MyInfo {
 
   private async getToken(authCode: string, state: string): Promise<MyInfoGetTokenRes> {
     const method = 'POST';
-    const url = URL_CONFIG[this.env].tokenUrl;
+    const url = URL_CONFIG[this.options.environment].tokenUrl;
 
     const body = {
       grant_type: 'authorization_code',
@@ -188,13 +192,19 @@ export class MyInfo {
     };
 
     const contentType = 'application/x-www-form-urlencoded';
-    const authHeader = this.generateAuthorizationHeader(url, body, method, contentType);
 
-    const headers = {
+    const headers: {
+      'Content-Type': string;
+      'Cache-Control': string;
+      Authorization?: string;
+    } = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Cache-Control': 'no-cache',
-      Authorization: authHeader
+      'Cache-Control': 'no-cache'
     };
+
+    if (this.requireSecurityFeatures) {
+      headers.Authorization = this.generateAuthorizationHeader(url, body, method, contentType);
+    }
 
     const data = await ApiUtil.post<{ access_token: string }>(url, body, {
       headers,
@@ -243,20 +253,30 @@ export class MyInfo {
         txNo: req.txNo
       };
 
-      const url = `${URL_CONFIG[this.env].personUrl}/${nricFin}?${QueryStringUtil.stringify(params)}`;
+      const url = `${URL_CONFIG[this.options.environment].personUrl}/${nricFin}?${QueryStringUtil.stringify(params)}`;
 
-      const authHeaders = this.generateAuthorizationHeader(url, params, method);
-      const headers = {
-        'Cache-Control': 'no-cache',
-        Authorization: `${authHeaders},Bearer ${accessToken}`
+      const headers: {
+        'Cache-Control': string;
+        Authorization?: string;
+      } = {
+        'Cache-Control': 'no-cache'
       };
+
+      if (this.requireSecurityFeatures) {
+        headers.Authorization = `${this.generateAuthorizationHeader(url, params, method)},Bearer ${accessToken}`;
+      }
 
       const data = await ApiUtil.get<string>(url, {
         headers,
         proxy: this.options.proxy
       });
 
-      const myInfoPerson: MyInfoPerson = this.parsePersonDataFromRes(await this.decryptJwe<MyInfoPersonData>(data));
+      let myInfoPerson: MyInfoPerson;
+      if (this.requireSecurityFeatures) {
+        myInfoPerson = await this.decryptJwe<MyInfoPerson>(data);
+      } else {
+        myInfoPerson = JSON.parse(data);
+      }
 
       return {
         data: myInfoPerson,
