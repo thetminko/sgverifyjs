@@ -1,5 +1,5 @@
 import { CryptoUtil } from 'src/util';
-import { SgVerifyOptions } from '../types';
+import { SgVerifyEnvironment, SgVerifyOptions } from '../types';
 
 export interface SgVerifyGenerateQrCodeReq {
   state: string;
@@ -10,7 +10,7 @@ export interface SgVerifyGenerateQrCodeReq {
 export type SgVerifyGenerateQrCodeRes = string;
 
 const URL_CONFIG: {
-  [key in 'PROD' | 'TEST' | 'SANDBOX']: {
+  [key in SgVerifyEnvironment]: {
     qrCodeUrl: string;
   };
 } = {

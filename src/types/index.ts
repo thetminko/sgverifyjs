@@ -2,6 +2,8 @@ import { MyInfoPerson, MyInfoGetPersonReq, MyInfoGetPersonRes, MyInfoPersonAttri
 import { SgVerifyGenerateQrCodeReq, SgVerifyGenerateQrCodeRes } from '../lib/SgVerify';
 import { ProxyConfig } from '../util';
 
+export type SgVerifyEnvironment = 'PROD' | 'TEST' | 'SANDBOX';
+
 export type {
   SgVerifyGenerateQrCodeReq,
   SgVerifyGenerateQrCodeRes,
@@ -46,7 +48,7 @@ export interface SgVerifyOptions {
    * SANDBOX is for testing during development.
    * This environment does not contain security features. You should'nt use this for production and staging.
    */
-  environment: 'PROD' | 'TEST' | 'SANDBOX';
+  environment: SgVerifyEnvironment;
 
   /**
    * Proxy

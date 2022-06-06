@@ -1,9 +1,9 @@
 import jose from 'node-jose';
-import { SgVerifyOptions } from '../types';
+import { SgVerifyEnvironment, SgVerifyOptions } from '../types';
 import { ApiUtil, CryptoUtil, QueryStringUtil } from '../util';
 
 const URL_CONFIG: {
-  [key in 'PROD' | 'TEST' | 'SANDBOX']: {
+  [key in SgVerifyEnvironment]: {
     tokenUrl: string;
     personUrl: string;
   };
