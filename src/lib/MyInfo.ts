@@ -219,7 +219,7 @@ export class MyInfo {
     };
   }
 
-  private parsePersonDataFromRes(data: MyInfoPersonData): MyInfoPerson {
+  private transformPersonData(data: MyInfoPersonData): MyInfoPerson {
     const person: MyInfoPerson = {};
 
     for (const key in data) {
@@ -271,15 +271,15 @@ export class MyInfo {
         proxy: this.options.proxy
       });
 
-      let myInfoPerson: MyInfoPerson;
+      let jsonData: MyInfoPersonData;
       if (this.requireSecurityFeatures) {
-        myInfoPerson = await this.decryptJwe<MyInfoPerson>(data);
+        jsonData = await this.decryptJwe<MyInfoPerson>(data);
       } else {
-        myInfoPerson = JSON.parse(data);
+        jsonData = JSON.parse(data);
       }
 
       return {
-        data: myInfoPerson,
+        data: this.transformPersonData(jsonData),
         state: req.state
       };
     } catch (err) {
