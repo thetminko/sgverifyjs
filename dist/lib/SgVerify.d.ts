@@ -1,8 +1,8 @@
 import { SgVerifyOptions } from '../types';
 export interface SgVerifyGenerateQrCodeReq {
     state: string;
-    qrCodeExpiryInSec: number;
-    qrType: 'static' | 'dynamic';
+    qrType?: 'static' | 'dynamic';
+    qrCodeExpiryInSec?: number;
 }
 export declare type SgVerifyGenerateQrCodeRes = string;
 export declare class SgVerify {

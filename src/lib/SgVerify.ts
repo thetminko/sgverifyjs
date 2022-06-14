@@ -3,8 +3,8 @@ import { CryptoUtil } from '../util';
 
 export interface SgVerifyGenerateQrCodeReq {
   state: string;
-  qrCodeExpiryInSec: number;
-  qrType: 'static' | 'dynamic';
+  qrType?: 'static' | 'dynamic';
+  qrCodeExpiryInSec?: number;
 }
 
 export type SgVerifyGenerateQrCodeRes = string;
@@ -61,7 +61,7 @@ export class SgVerify {
 
     const now = new Date();
     const expiry = new Date();
-    expiry.setSeconds(now.getSeconds() + qrCodeExpiryInSec);
+    expiry.setSeconds(now.getSeconds() + (qrCodeExpiryInSec ?? this.default.qrCodeExpiryInSec));
 
     const { qrType: defaultQrType, version } = this.default;
 

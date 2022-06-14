@@ -32,7 +32,7 @@ class SgVerify {
         const config = URL_CONFIG[this.options.environment];
         const now = new Date();
         const expiry = new Date();
-        expiry.setSeconds(now.getSeconds() + qrCodeExpiryInSec);
+        expiry.setSeconds(now.getSeconds() + (qrCodeExpiryInSec ?? this.default.qrCodeExpiryInSec));
         const { qrType: defaultQrType, version } = this.default;
         const url = [
             config.qrCodeUrl,
