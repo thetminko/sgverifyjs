@@ -7,10 +7,10 @@ const URL_CONFIG = {
         qrCodeUrl: 'https://app.singpass.gov.sg/sgverify'
     },
     TEST: {
-        qrCodeUrl: 'https://test.app.singpass.gov.sg/sgverify'
+        qrCodeUrl: 'https://app.singpass.gov.sg/sgverify'
     },
     SANDBOX: {
-        qrCodeUrl: 'https://sandbox.app.singpass.sg/sgverify'
+        qrCodeUrl: 'https://app.singpass.sg/sgverify'
     }
 };
 class SgVerify {
