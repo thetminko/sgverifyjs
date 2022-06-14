@@ -4,6 +4,6 @@ export default class SgVerifyConnector {
     private readonly sgVerify;
     private readonly myInfo;
     constructor(options: SgVerifyOptions);
-    generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): string;
+    generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): Promise<string>;
     getPersonaData(req: MyInfoGetPersonReq): Promise<MyInfoGetPersonRes>;
 }

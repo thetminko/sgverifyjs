@@ -1,7 +1,6 @@
 import { MyInfo } from './lib/MyInfo';
 import { SgVerify } from './lib/SgVerify';
 import { SgVerifyOptions, SgVerifyGenerateQrCodeReq, MyInfoGetPersonReq, MyInfoGetPersonRes } from './types';
-import { CryptoUtil } from './util';
 
 export * from './types';
 
@@ -35,7 +34,7 @@ export default class SgVerifyConnector {
    *
    * @returns string
    */
-  generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): string {
+  async generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): Promise<string> {
     return this.sgVerify.generateQrCodeUrl(req);
   }
 
@@ -46,8 +45,6 @@ export default class SgVerifyConnector {
    * @returns Promise<MyInfoGetPersonRes>
    */
   async getPersonaData(req: MyInfoGetPersonReq): Promise<MyInfoGetPersonRes> {
-    const txNo = req.txNo ?? CryptoUtil.nonce(10);
-    req.txNo = txNo;
     return this.myInfo.getPersonData(req);
   }
 }

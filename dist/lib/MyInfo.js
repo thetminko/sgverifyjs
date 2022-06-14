@@ -53,8 +53,8 @@ class MyInfo {
         }
         return newJSON;
     }
-    generateAuthorizationHeader(url, params, method, contentType) {
-        const nonce = util_1.CryptoUtil.nonce();
+    async generateAuthorizationHeader(url, params, method, contentType) {
+        const nonce = await util_1.CryptoUtil.nonce();
         const timestamp = new Date().getTime();
         const signatureMethod = this.default.signatureMethod;
         const defaultAuthHeaders = {
@@ -110,7 +110,7 @@ class MyInfo {
             'Cache-Control': 'no-cache'
         };
         if (this.requireSecurityFeatures) {
-            headers.Authorization = this.generateAuthorizationHeader(url, body, method, contentType);
+            headers.Authorization = await this.generateAuthorizationHeader(url, body, method, contentType);
         }
         const data = await util_1.ApiUtil.post(url, body, {
             headers,
@@ -142,14 +142,14 @@ class MyInfo {
             const params = {
                 client_id: this.options.client.id,
                 attributes: this.options.personAttributes.join(','),
-                txNo: req.txNo ?? util_1.CryptoUtil.nonce(10)
+                txNo: req.txNo ?? (await util_1.CryptoUtil.nonce(10))
             };
             const url = `${URL_CONFIG[this.options.environment].personUrl}/${nricFin}?${util_1.QueryStringUtil.stringify(params)}`;
             const headers = {
                 'Cache-Control': 'no-cache'
             };
             if (this.requireSecurityFeatures) {
-                headers.Authorization = `${this.generateAuthorizationHeader(url, params, method)},Bearer ${accessToken}`;
+                headers.Authorization = `${await this.generateAuthorizationHeader(url, params, method)},Bearer ${accessToken}`;
             }
             const data = await util_1.ApiUtil.get(url, {
                 headers,

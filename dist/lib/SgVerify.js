@@ -26,7 +26,7 @@ class SgVerify {
     signUrl(url) {
         return `${url}&signature=${util_1.CryptoUtil.signWithRs256(url, this.options.privateKey)}`;
     }
-    generateQrCodeUrl(req) {
+    async generateQrCodeUrl(req) {
         const { state, qrCodeExpiryInSec, qrType } = req;
         const { callbackUrl, client: { id: clientId } } = this.options;
         const config = URL_CONFIG[this.options.environment];
@@ -41,7 +41,7 @@ class SgVerify {
             `&qr_type=${qrType ?? defaultQrType}`,
             `&signature_method=${this.default.signatureMethod}`,
             `&v=${version}`,
-            `&nonce=${util_1.CryptoUtil.nonce()}`,
+            `&nonce=${await util_1.CryptoUtil.nonce()}`,
             `&state=${state}`,
             `&timestamp_expiry=${now.getTime()}`,
             `&timestamp_start=${expiry.getTime()}`

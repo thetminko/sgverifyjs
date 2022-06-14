@@ -105,13 +105,13 @@ export class MyInfo {
     return newJSON as T;
   }
 
-  private generateAuthorizationHeader(
+  private async generateAuthorizationHeader(
     url: string,
     params: Record<string, string>,
     method: 'GET' | 'POST',
     contentType?: string
-  ): string {
-    const nonce = CryptoUtil.nonce();
+  ): Promise<string> {
+    const nonce = await CryptoUtil.nonce();
     const timestamp = new Date().getTime();
     const signatureMethod = this.default.signatureMethod;
 
@@ -203,7 +203,7 @@ export class MyInfo {
     };
 
     if (this.requireSecurityFeatures) {
-      headers.Authorization = this.generateAuthorizationHeader(url, body, method, contentType);
+      headers.Authorization = await this.generateAuthorizationHeader(url, body, method, contentType);
     }
 
     const data = await ApiUtil.post<{ access_token: string }>(url, body, {
@@ -250,7 +250,7 @@ export class MyInfo {
       const params = {
         client_id: this.options.client.id,
         attributes: this.options.personAttributes.join(','),
-        txNo: req.txNo ?? CryptoUtil.nonce(10)
+        txNo: req.txNo ?? (await CryptoUtil.nonce(10))
       };
 
       const url = `${URL_CONFIG[this.options.environment].personUrl}/${nricFin}?${QueryStringUtil.stringify(params)}`;
@@ -263,7 +263,7 @@ export class MyInfo {
       };
 
       if (this.requireSecurityFeatures) {
-        headers.Authorization = `${this.generateAuthorizationHeader(url, params, method)},Bearer ${accessToken}`;
+        headers.Authorization = `${await this.generateAuthorizationHeader(url, params, method)},Bearer ${accessToken}`;
       }
 
       const data = await ApiUtil.get<string>(url, {

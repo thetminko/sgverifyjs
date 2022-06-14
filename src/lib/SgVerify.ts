@@ -49,7 +49,7 @@ export class SgVerify {
     return `${url}&signature=${CryptoUtil.signWithRs256(url, this.options.privateKey)}`;
   }
 
-  generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): SgVerifyGenerateQrCodeRes {
+  async generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): Promise<SgVerifyGenerateQrCodeRes> {
     const { state, qrCodeExpiryInSec, qrType } = req;
 
     const {
@@ -72,7 +72,7 @@ export class SgVerify {
       `&qr_type=${qrType ?? defaultQrType}`,
       `&signature_method=${this.default.signatureMethod}`,
       `&v=${version}`,
-      `&nonce=${CryptoUtil.nonce()}`,
+      `&nonce=${await CryptoUtil.nonce()}`,
       `&state=${state}`,
       `&timestamp_expiry=${now.getTime()}`,
       `&timestamp_start=${expiry.getTime()}`

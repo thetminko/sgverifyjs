@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { promisify } from 'util';
 
 export class CryptoUtil {
   /**
@@ -12,7 +13,8 @@ export class CryptoUtil {
     return crypto.createSign(algorithm).update(data).sign({ key: privateKey }, 'base64');
   }
 
-  static nonce(bytes = 20) {
-    return crypto.randomBytes(bytes).toString('hex');
+  static async nonce(bytes = 20) {
+    const promise = promisify(crypto.randomBytes);
+    return promise(bytes).then((buf) => buf.toString('hex'));
   }
 }

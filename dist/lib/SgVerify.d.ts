@@ -10,5 +10,5 @@ export declare class SgVerify {
     private readonly default;
     constructor(options: SgVerifyOptions);
     private signUrl;
-    generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): SgVerifyGenerateQrCodeRes;
+    generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): Promise<SgVerifyGenerateQrCodeRes>;
 }

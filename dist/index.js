@@ -16,19 +16,16 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const MyInfo_1 = require("./lib/MyInfo");
 const SgVerify_1 = require("./lib/SgVerify");
-const util_1 = require("./util");
 __exportStar(require("./types"), exports);
 class SgVerifyConnector {
     constructor(options) {
         this.sgVerify = new SgVerify_1.SgVerify(options);
         this.myInfo = new MyInfo_1.MyInfo(options);
     }
-    generateQrCodeUrl(req) {
+    async generateQrCodeUrl(req) {
         return this.sgVerify.generateQrCodeUrl(req);
     }
     async getPersonaData(req) {
-        const txNo = req.txNo ?? util_1.CryptoUtil.nonce(10);
-        req.txNo = txNo;
         return this.myInfo.getPersonData(req);
     }
 }
