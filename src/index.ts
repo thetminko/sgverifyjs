@@ -16,7 +16,7 @@ export default class SgVerifyConnector {
   }
 
   /**
-   * To generate authorize url
+   * To generate QR code url
    *
    * state - Identifier that represents the user's session/transaction with the client for reconciling query and response.
    * The same value will be sent back via the callback URL. Use a unique system generated number for each user/transaction. e.g. USER_ABC
@@ -35,7 +35,7 @@ export default class SgVerifyConnector {
    *
    * @returns string
    */
-  getAuthorizeUrl(req: SgVerifyGenerateQrCodeReq): string {
+  generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): string {
     return this.sgVerify.generateQrCodeUrl(req);
   }
 
