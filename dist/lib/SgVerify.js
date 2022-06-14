@@ -38,13 +38,13 @@ class SgVerify {
             config.qrCodeUrl,
             `?callback=${encodeURIComponent(callbackUrl)}`,
             `&client_id=${clientId}`,
+            `&nonce=${await util_1.CryptoUtil.nonce()}`,
             `&qr_type=${qrType ?? defaultQrType}`,
             `&signature_method=${this.default.signatureMethod}`,
-            `&v=${version}`,
-            `&nonce=${await util_1.CryptoUtil.nonce()}`,
             `&state=${state}`,
             `&timestamp_expiry=${now.getTime()}`,
-            `&timestamp_start=${expiry.getTime()}`
+            `&timestamp_start=${expiry.getTime()}`,
+            `&v=${version}`
         ].join('');
         return this.signUrl(url);
     }
