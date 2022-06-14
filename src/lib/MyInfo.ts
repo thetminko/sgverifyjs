@@ -77,6 +77,16 @@ export interface MyInfoGetPersonReq {
    * Used for tracking
    */
   txNo?: string;
+
+  /**
+   * Any error returned from callback
+   */
+  error?: string;
+
+  /**
+   * Error description if there is any error from callback
+   */
+  errorDescription?: string;
 }
 
 export class MyInfo {
@@ -241,6 +251,10 @@ export class MyInfo {
 
   async getPersonData(req: MyInfoGetPersonReq): Promise<MyInfoGetPersonRes> {
     try {
+      if (req.error) {
+        throw new Error(req.errorDescription);
+      }
+
       const {
         accessToken,
         decodedAccessToken: { sub: nricFin }

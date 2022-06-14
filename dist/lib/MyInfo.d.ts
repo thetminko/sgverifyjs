@@ -27,6 +27,8 @@ export interface MyInfoGetPersonReq {
     authCode: string;
     state: string;
     txNo?: string;
+    error?: string;
+    errorDescription?: string;
 }
 export declare class MyInfo {
     private readonly options;

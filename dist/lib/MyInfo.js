@@ -137,6 +137,9 @@ class MyInfo {
     }
     async getPersonData(req) {
         try {
+            if (req.error) {
+                throw new Error(req.errorDescription);
+            }
             const { accessToken, decodedAccessToken: { sub: nricFin } } = await this.getToken(req.authCode, req.state);
             const method = 'GET';
             const params = {
