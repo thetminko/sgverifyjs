@@ -116,6 +116,9 @@ class MyInfo {
             headers,
             proxy: this.options.proxy
         });
+        if (data.code) {
+            throw new Error(`Error occured while getting token [${data.code}] [${data.message}]`);
+        }
         const decodedAccessToken = await this.verifyJws(data.access_token);
         return {
             accessToken: data.access_token,
@@ -138,7 +141,10 @@ class MyInfo {
     async getPersonData(req) {
         try {
             if (req.error) {
-                throw new Error(req.errorDescription);
+                throw new Error(`Error occured in callback [${req.error}] [${req.errorDescription}]`);
+            }
+            if (!req.authCode) {
+                throw new Error('Auth code not found in callback');
             }
             const { accessToken, decodedAccessToken: { sub: nricFin } } = await this.getToken(req.authCode, req.state);
             const method = 'GET';
@@ -158,17 +164,20 @@ class MyInfo {
                 headers,
                 proxy: this.options.proxy
             });
-            let jsonData;
-            if (this.requireSecurityFeatures) {
-                jsonData = await this.decryptJwe(data);
+            if (typeof data === 'string') {
+                let jsonData;
+                if (this.requireSecurityFeatures) {
+                    jsonData = await this.decryptJwe(data);
+                }
+                else {
+                    jsonData = JSON.parse(data);
+                }
+                return {
+                    data: this.transformPersonData(jsonData),
+                    state: req.state
+                };
             }
-            else {
-                jsonData = JSON.parse(data);
-            }
-            return {
-                data: this.transformPersonData(jsonData),
-                state: req.state
-            };
+            throw new Error(`Error occured while getting person data [${data.code}] [${data.message}]`);
         }
         catch (err) {
             throw err;

@@ -216,10 +216,14 @@ export class MyInfo {
       headers.Authorization = await this.generateAuthorizationHeader(url, body, method, contentType);
     }
 
-    const data = await ApiUtil.post<{ access_token: string }>(url, body, {
+    const data = await ApiUtil.post<{ access_token: string; code?: string; message?: string }>(url, body, {
       headers,
       proxy: this.options.proxy
     });
+
+    if (data.code) {
+      throw new Error(`Error occured while getting token [${data.code}] [${data.message}]`);
+    }
 
     const decodedAccessToken: DecodedAccessToken = await this.verifyJws<DecodedAccessToken>(data.access_token);
 
@@ -252,7 +256,10 @@ export class MyInfo {
   async getPersonData(req: MyInfoGetPersonReq): Promise<MyInfoGetPersonRes> {
     try {
       if (req.error) {
-        throw new Error(req.errorDescription);
+        throw new Error(`Error occured in callback [${req.error}] [${req.errorDescription}]`);
+      }
+      if (!req.authCode) {
+        throw new Error('Auth code not found in callback');
       }
 
       const {
@@ -280,22 +287,26 @@ export class MyInfo {
         headers.Authorization = `${await this.generateAuthorizationHeader(url, params, method)},Bearer ${accessToken}`;
       }
 
-      const data = await ApiUtil.get<string>(url, {
+      const data = await ApiUtil.get<string | { code: string; message: string }>(url, {
         headers,
         proxy: this.options.proxy
       });
 
-      let jsonData: MyInfoPersonData;
-      if (this.requireSecurityFeatures) {
-        jsonData = await this.decryptJwe<MyInfoPerson>(data);
-      } else {
-        jsonData = JSON.parse(data);
+      if (typeof data === 'string') {
+        let jsonData: MyInfoPersonData;
+        if (this.requireSecurityFeatures) {
+          jsonData = await this.decryptJwe<MyInfoPerson>(data);
+        } else {
+          jsonData = JSON.parse(data);
+        }
+
+        return {
+          data: this.transformPersonData(jsonData),
+          state: req.state
+        };
       }
 
-      return {
-        data: this.transformPersonData(jsonData),
-        state: req.state
-      };
+      throw new Error(`Error occured while getting person data [${data.code}] [${data.message}]`);
     } catch (err) {
       throw err;
     }
