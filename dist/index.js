@@ -23,7 +23,7 @@ class SgVerifyConnector {
         this.sgVerify = new SgVerify_1.SgVerify(options);
         this.myInfo = new MyInfo_1.MyInfo(options);
     }
-    getAuthorizeUrl(req) {
+    generateQrCodeUrl(req) {
         return this.sgVerify.generateQrCodeUrl(req);
     }
     async getPersonaData(req) {
