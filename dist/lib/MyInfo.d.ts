@@ -26,7 +26,7 @@ export interface MyInfoGetPersonRes {
 export interface MyInfoGetPersonReq {
     authCode: string;
     state: string;
-    txNo: string;
+    txNo?: string;
 }
 export declare class MyInfo {
     private readonly options;

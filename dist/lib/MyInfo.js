@@ -142,7 +142,7 @@ class MyInfo {
             const params = {
                 client_id: this.options.client.id,
                 attributes: this.options.personAttributes.join(','),
-                txNo: req.txNo
+                txNo: req.txNo ?? util_1.CryptoUtil.nonce(10)
             };
             const url = `${URL_CONFIG[this.options.environment].personUrl}/${nricFin}?${util_1.QueryStringUtil.stringify(params)}`;
             const headers = {

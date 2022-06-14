@@ -76,7 +76,7 @@ export interface MyInfoGetPersonReq {
    * Transaction ID (Optional)
    * Used for tracking
    */
-  txNo: string;
+  txNo?: string;
 }
 
 export class MyInfo {
@@ -250,7 +250,7 @@ export class MyInfo {
       const params = {
         client_id: this.options.client.id,
         attributes: this.options.personAttributes.join(','),
-        txNo: req.txNo
+        txNo: req.txNo ?? CryptoUtil.nonce(10)
       };
 
       const url = `${URL_CONFIG[this.options.environment].personUrl}/${nricFin}?${QueryStringUtil.stringify(params)}`;
