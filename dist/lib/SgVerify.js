@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SgVerify = void 0;
-const util_1 = require("src/util");
+const util_1 = require("../util");
 const URL_CONFIG = {
     PROD: {
         qrCodeUrl: 'https://app.singpass.gov.sg/sgverify'

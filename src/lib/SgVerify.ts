@@ -1,5 +1,5 @@
-import { CryptoUtil } from 'src/util';
 import { SgVerifyEnvironment, SgVerifyOptions } from '../types';
+import { CryptoUtil } from '../util';
 
 export interface SgVerifyGenerateQrCodeReq {
   state: string;
