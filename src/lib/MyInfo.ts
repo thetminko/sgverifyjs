@@ -1,4 +1,4 @@
-import jose from 'node-jose';
+import * as jose from 'node-jose';
 import { SgVerifyEnvironment, SgVerifyOptions } from '../types';
 import { ApiUtil, CryptoUtil, QueryStringUtil } from '../util';
 

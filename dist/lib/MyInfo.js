@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyInfo = exports.MyInfoPersonAttributes = void 0;
-const node_jose_1 = require("node-jose");
+const jose = require("node-jose");
 const util_1 = require("../util");
 const URL_CONFIG = {
     PROD: {
@@ -78,19 +78,19 @@ class MyInfo {
         ].join(',');
     }
     async verifyJws(jws) {
-        const keystore = node_jose_1.default.JWK.createKeyStore();
+        const keystore = jose.JWK.createKeyStore();
         const jwsKey = await keystore.add(this.options.myInfoPublicCert, 'pem');
-        const { payload } = await node_jose_1.default.JWS.createVerify(jwsKey).verify(jws);
+        const { payload } = await jose.JWS.createVerify(jwsKey).verify(jws);
         return JSON.parse(Buffer.from(payload).toString());
     }
     async decryptJwe(jwe) {
-        const keystore = node_jose_1.default.JWK.createKeyStore();
+        const keystore = jose.JWK.createKeyStore();
         const jweParts = jwe.split('.');
         if (jweParts.length !== 5) {
             throw new Error('Invalid JWE');
         }
         const key = await keystore.add(this.options.privateKey, 'pem');
-        const { payload } = await node_jose_1.default.JWE.createDecrypt(key).decrypt(jwe);
+        const { payload } = await jose.JWE.createDecrypt(key).decrypt(jwe);
         return this.verifyJws(payload.toString());
     }
     async getToken(authCode, state) {

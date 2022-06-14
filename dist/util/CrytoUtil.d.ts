@@ -1,6 +1,5 @@
-import shortUuid from 'short-uuid';
 export declare class CryptoUtil {
     static signWithRs256(data: string, privateKey: string): string;
     private static sign;
-    static nonce(any?: any): Promise<shortUuid.SUUID>;
+    static nonce(bytes?: number): Promise<string>;
 }
