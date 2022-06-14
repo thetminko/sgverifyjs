@@ -1,6 +1,6 @@
 {
   "name": "sgverifyjs",
-  "version": "1.0.0-alpha.0",
+  "version": "0.1.0-alpha.0",
   "description": "Wrapper library of SGVerify https://api.singpass.gov.sg/gov/library/verify/govdevelopers/overview writter in TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
