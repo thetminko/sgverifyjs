@@ -1,13 +1,16 @@
 ```
 import SgVerifyConnector from 'sgverifyjs';
 
+// proxy is optional
+// environment can be 'PROD' or 'TEST' or 'SANDOX'. You should use PROD or TEST in production and staging, it has security features.
+// SANDBOX does not have security features, not recommended for production or staging
 const sgVerify = new SgVerifyConnector({
   callbackUrl: '',
   client: {
     id: '',
     secret: ''
   },
-  isProduction: false,
+  environment: 'PROD',
   // base64 encoded public cert that you downloaded from SG Verify Developer Portal
   myInfoPublicCert: '',
   // base64 encoded private key of your SSL cert
