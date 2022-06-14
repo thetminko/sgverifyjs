@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { promisify } from 'util';
+import shortUuid from 'short-uuid';
 
 export class CryptoUtil {
   /**
@@ -13,8 +13,9 @@ export class CryptoUtil {
     return crypto.createSign(algorithm).update(data).sign({ key: privateKey }, 'base64');
   }
 
-  static async nonce(bytes = 20) {
-    const promise = promisify(crypto.randomBytes);
-    return promise(bytes).then((buf) => buf.toString('hex'));
+  static async nonce(any?: any) {
+    return shortUuid.generate();
+    // const promise = promisify(crypto.randomBytes);
+    // return promise(bytes).then((buf) => buf.toString('hex'));
   }
 }
