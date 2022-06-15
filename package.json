@@ -6,9 +6,12 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "prebuild": "rm -rf ./dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run cleanup",
     "build": "NODE_ENV=production tsc",
-    "format": "prettier --write \"src/**/*.ts\" && npm run eslint",
-    "eslint": "eslint --fix --ext .ts \"src/**/*.ts\"",
+    "cleanup": "npm run format && npm run lint",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint --fix --ext .ts \"src/**/*.ts\"",
     "test": "snyk test"
   },
   "keywords": [
