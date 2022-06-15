@@ -5,11 +5,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prebuild": "rm -rf ./dist && npm run test && npm run format",
+    "prebuild": "rm -rf ./dist",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
-    "test": "snyk test",
-    "prepublish": "npm run build"
+    "test": "snyk test"
   },
   "keywords": [
     "SGVerify",
