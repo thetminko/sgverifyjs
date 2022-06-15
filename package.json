@@ -6,8 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "prebuild": "rm -rf ./dist",
-    "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "build": "NODE_ENV=production tsc",
+    "format": "prettier --write \"src/**/*.ts\" && npm run eslint",
+    "eslint": "eslint --fix --ext .ts \"src/**/*.ts\"",
     "test": "snyk test"
   },
   "keywords": [
@@ -19,6 +20,10 @@
     "singpass",
     "myinfo"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thetminko/sgverifyjs.git"
+  },
   "author": "Thet Min Ko",
   "license": "None",
   "devDependencies": {
