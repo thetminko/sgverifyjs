@@ -25,7 +25,7 @@ class SgVerifyConnector {
     async generateQrCodeUrl(req) {
         return this.sgVerify.generateQrCodeUrl(req);
     }
-    async getPersonaData(req) {
+    async getPersonData(req) {
         return this.myInfo.getPersonData(req);
     }
 }
