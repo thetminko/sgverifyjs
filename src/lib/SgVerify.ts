@@ -73,8 +73,8 @@ export class SgVerify {
       `&qr_type=${qrType ?? defaultQrType}`,
       `&signature_method=${this.default.signatureMethod}`,
       `&state=${state}`,
-      `&timestamp_expiry=${now.getTime()}`,
-      `&timestamp_start=${expiry.getTime()}`,
+      `&timestamp_expiry=${expiry.getTime()}`,
+      `&timestamp_start=${now.getTime()}`,
       `&v=${version}`
     ].join('');
 
