@@ -193,11 +193,11 @@ export class MyInfo {
     const url = URL_CONFIG[this.options.environment].tokenUrl;
 
     const body = {
-      grant_type: 'authorization_code',
       code: authCode,
-      redirect_uri: this.options.callbackUrl,
-      client_id: this.options.client.id,
+      grant_type: 'authorization_code',
       client_secret: this.options.client.secret,
+      client_id: this.options.client.id,
+      redirect_uri: this.options.callbackUrl,
       state
     };
 
@@ -269,9 +269,9 @@ export class MyInfo {
 
       const method = 'GET';
       const params = {
-        client_id: this.options.client.id,
+        txNo: req.txNo ?? (await CryptoUtil.nonce(10)),
         attributes: this.options.personAttributes.join(','),
-        txNo: req.txNo ?? (await CryptoUtil.nonce(10))
+        client_id: this.options.client.id
       };
 
       const url = `${URL_CONFIG[this.options.environment].personUrl}/${nricFin}?${QueryStringUtil.stringify(params)}`;
