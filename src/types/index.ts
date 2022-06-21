@@ -1,3 +1,4 @@
+import { Logger } from '../lib/Logger';
 import { MyInfoPerson, MyInfoGetPersonReq, MyInfoGetPersonRes, MyInfoPersonAttributes } from '../lib/MyInfo';
 import { SgVerifyGenerateQrCodeReq, SgVerifyGenerateQrCodeRes } from '../lib/SgVerify';
 import { ProxyConfig } from '../util';
@@ -59,4 +60,8 @@ export interface SgVerifyOptions {
    * Setup attributes to retrieve from person data, you can override this value using the request parameter in getPersonData function
    */
   personAttributes: MyInfoPersonAttributes[];
+  /**
+   * Logger to print logs (optional)
+   */
+  logger?: Logger;
 }
