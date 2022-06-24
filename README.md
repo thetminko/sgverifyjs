@@ -112,7 +112,8 @@ export class SgVerifyController {
       errorDescription: req.query.error_description as string
     };
 
-    // Not required to await or return response, call the caller is from SgVerify
+    // Not required to await or return response, because the caller is from SgVerify
+    // Use websocket or express-sse to push the data back to the front-end client
     sgVerifyService.getPersonDataInfo(input);
   }
 
