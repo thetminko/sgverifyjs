@@ -1,0 +1,52 @@
+{
+  "name": "sgverifyjs",
+  "version": "0.1.0-alpha.0",
+  "description": "Wrapper library of SGVerify https://api.singpass.gov.sg/gov/library/verify/govdevelopers/overview written in TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prebuild": "rm -rf ./dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run cleanup",
+    "build": "NODE_ENV=production tsc",
+    "cleanup": "npm run format && npm run lint",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint --fix --ext .ts \"src/**/*.ts\"",
+    "test": "snyk test"
+  },
+  "keywords": [
+    "SGVerify",
+    "sgverify",
+    "sg",
+    "sgp",
+    "verify",
+    "singpass",
+    "myinfo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thetminko/sgverifyjs.git"
+  },
+  "author": "Thet Min Ko",
+  "license": "None",
+  "devDependencies": {
+    "@types/node-jose": "^1.1.10",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "eslint": "^8.18.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "node-jose": "^2.1.1",
+    "query-string": "^7.1.1"
+  },
+  "files": [
+    "dist"
+  ]
+}
