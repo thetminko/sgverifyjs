@@ -1,4 +1,3 @@
-```
 /* eslint-disable no-sync */
 import fs from 'fs';
 import SgVerifyConnector, {
@@ -75,4 +74,3 @@ export class SgVerifyService extends SgVerifyConnector {
     return this.isAvailableForEnv;
   }
 }
-```
