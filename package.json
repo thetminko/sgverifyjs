@@ -8,6 +8,7 @@
     "prebuild": "rm -rf ./dist",
     "prepare": "npm run build",
     "prepublishOnly": "npm run cleanup",
+    "postversion": "git push",
     "build": "NODE_ENV=production tsc",
     "cleanup": "npm run format && npm run lint",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -27,8 +28,9 @@
     "type": "git",
     "url": "https://github.com/thetminko/sgverifyjs.git"
   },
-  "author": "Thet Min Ko",
-  "license": "None",
+  "homepage": "https://github.com/thetminko/sgverifyjs#readme",
+  "author": "Thet Min Ko (dev.minko@gmail.com)",
+  "license": "ISC",
   "devDependencies": {
     "@types/node-jose": "^1.1.10",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
