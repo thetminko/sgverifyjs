@@ -31,6 +31,7 @@
   "homepage": "https://github.com/thetminko/sgverifyjs#readme",
   "author": "Thet Min Ko (dev.minko@gmail.com)",
   "license": "ISC",
+  "funding": "https://www.paypal.me/thetminko",
   "devDependencies": {
     "@types/node-jose": "^1.1.10",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
