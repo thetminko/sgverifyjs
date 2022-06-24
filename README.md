@@ -1,5 +1,7 @@
+
+
+# SgVerifyService.ts
 ```
-/* eslint-disable no-sync */
 import fs from 'fs';
 import SgVerifyConnector, {
   MyInfoPersonReq,
@@ -74,5 +76,45 @@ export class SgVerifyService extends SgVerifyConnector {
   isFeatureAvailable() {
     return this.isAvailableForEnv;
   }
+}
+```
+
+# Init Services on app start up. (e.g. src/services/index.ts)
+```
+import { SgVerifyService } from './SgVerifyService';
+
+export const sgVerifyService = new SgVerifyService();
+```
+
+# SgVerifyController.ts
+```
+import { sgVerifyService } from './services';
+
+@Controller('sg-verify')
+export class SgVerifyController {
+
+  @Get('qrCode')
+  @AutoRespond()
+  async generateQrCode(): Promise<SgVerifyGenerateQrCodeRes> {
+    return sgVerifyService.generateQrCodeUrl({
+      state: StringUtil.generateUuid(),
+      qrCodeExpiryInSec: 604800
+    });
+  }
+
+  @Get('callback')
+  @AutoRespond()
+  async callback(req: Request) {
+    const input: MyInfoPersonReq = {
+      authCode: req.query.code as string,
+      state: req.query.state as string,
+      error: req.query.error as string,
+      errorDescription: req.query.error_description as string
+    };
+
+    // Not required to await or return response, call the caller is from SgVerify
+    sgVerifyService.getPersonDataInfo(input);
+  }
+
 }
 ```
