@@ -55,6 +55,11 @@ export class MyInfoPerson {
             value: valueToUse.length > 0 ? valueToUse : undefined
           };
         }
+
+        const result = this.person[personKey];
+        if (result && Object.keys(result).length === 0) {
+          this.person[personKey] = undefined;
+        }
       }
     }
   }
