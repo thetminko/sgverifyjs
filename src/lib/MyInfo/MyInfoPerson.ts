@@ -57,7 +57,10 @@ export class MyInfoPerson {
         }
 
         const result = this.person[personKey];
-        if (result && Object.keys(result).length === 0) {
+        if (
+          result &&
+          (Object.keys(result).length === 0 || Object.values(result).every((value) => value === undefined))
+        ) {
           this.person[personKey] = undefined;
         }
       }
