@@ -73,6 +73,17 @@ export class SgVerifyService extends SgVerifyConnector {
     return super.getPersonData(req);
   }
 
+  // if you want to do your own person response transformation
+    async getPersonDataInfo(req: MyInfoPersonReq) {
+    const useCustomTransformReq: MyInfoPersonReq<{ name?: string }> = {
+      ...req,
+      transform: (data: MyInfoPersonApiResData) => ({
+        name: data.name
+      })
+    };
+    const person = await super.getPersonData<{ name?: string }>(useCustomTransformReq);
+  }
+
   isFeatureAvailable() {
     return this.isAvailableForEnv;
   }
