@@ -1,6 +1,12 @@
 import { MyInfo } from './lib/MyInfo';
 import { SgVerify } from './lib/SgVerify';
-import { SgVerifyOptions, SgVerifyGenerateQrCodeReq, MyInfoPersonReq, MyInfoPersonRes } from './types';
+import {
+  SgVerifyOptions,
+  SgVerifyGenerateQrCodeReq,
+  MyInfoPersonReq,
+  MyInfoPersonRes,
+  MyInfoPersonData
+} from './types';
 
 export * from './types';
 
@@ -44,7 +50,7 @@ export default class SgVerifyConnector {
    * @param req MyInfoGetPersonReq
    * @returns Promise<MyInfoGetPersonRes>
    */
-  async getPersonData<TransformedData>(
+  async getPersonData<TransformedData = MyInfoPersonData>(
     req: MyInfoPersonReq<TransformedData>
   ): Promise<MyInfoPersonRes<TransformedData>> {
     return this.myInfo.getPersonData(req);
