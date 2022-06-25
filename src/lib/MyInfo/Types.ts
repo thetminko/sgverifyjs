@@ -1,6 +1,6 @@
 import { MyInfoPersonAttributes } from './Constant';
 
-export interface MyInfoPersonReq {
+export interface MyInfoPersonReq<T> {
   /**
    * Authorization Code sent to our callback URL from SG Verify
    */
@@ -26,6 +26,12 @@ export interface MyInfoPersonReq {
    * Error description if there is any error from callback
    */
   errorDescription?: string;
+
+  /**
+   * Optional: Transform MyInfoPersonData
+   * If never pass in, will use default transformer
+   */
+  transform?: (response: MyInfoPersonApiResData) => T;
 }
 
 export interface DecodedAccessToken {
@@ -74,8 +80,8 @@ export type MyInfoPersonData = {
       };
 };
 
-export interface MyInfoPersonRes {
-  data: MyInfoPersonData;
+export interface MyInfoPersonRes<T> {
+  data: MyInfoPersonData | T;
   state: string;
 }
 /**

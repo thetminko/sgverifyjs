@@ -128,7 +128,9 @@ export class MyInfo {
     return person;
   }
 
-  async getPersonData(req: MyInfoPersonReq): Promise<MyInfoPersonRes> {
+  async getPersonData<TransformedData>(
+    req: MyInfoPersonReq<TransformedData>
+  ): Promise<MyInfoPersonRes<TransformedData>> {
     this.options.logger?.info(`Getting person data [${JSON.stringify(req)}]`);
     try {
       if (req.error) {
@@ -189,7 +191,7 @@ export class MyInfo {
         }
 
         return {
-          data: this.transformPersonData(jsonData),
+          data: req.transform ? req.transform(jsonData) : this.transformPersonData(jsonData),
           state: req.state
         };
       }

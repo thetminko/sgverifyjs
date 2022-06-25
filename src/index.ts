@@ -44,7 +44,9 @@ export default class SgVerifyConnector {
    * @param req MyInfoGetPersonReq
    * @returns Promise<MyInfoGetPersonRes>
    */
-  async getPersonData(req: MyInfoPersonReq): Promise<MyInfoPersonRes> {
+  async getPersonData<TransformedData>(
+    req: MyInfoPersonReq<TransformedData>
+  ): Promise<MyInfoPersonRes<TransformedData>> {
     return this.myInfo.getPersonData(req);
   }
 }
