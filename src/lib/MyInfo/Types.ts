@@ -1,6 +1,6 @@
 import { MyInfoPersonAttributes } from './Constant';
 
-export interface MyInfoPersonReq<T> {
+export interface MyInfoPersonReq<T = MyInfoPersonData> {
   /**
    * Authorization Code sent to our callback URL from SG Verify
    */
