@@ -78,7 +78,7 @@ export class SgVerifyService extends SgVerifyConnector {
     const useCustomTransformReq: MyInfoPersonReq<{ name?: string }> = {
       ...req,
       transform: (data: MyInfoPersonApiResData) => ({
-        name: data.name
+        name: data.name.value
       })
     };
     const person = await super.getPersonData<{ name?: string }>(useCustomTransformReq);
