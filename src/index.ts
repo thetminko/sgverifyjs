@@ -1,5 +1,5 @@
 import { MyInfo } from './lib/MyInfo';
-import { SgVerify } from './lib/SgVerify';
+import { SgVerify, SgVerifyGenerateQrCodeRes } from './lib/SgVerify';
 import {
   SgVerifyOptions,
   SgVerifyGenerateQrCodeReq,
@@ -40,7 +40,7 @@ export default class SgVerifyConnector {
    *
    * @returns string
    */
-  async generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): Promise<string> {
+  async generateQrCodeUrl(req: SgVerifyGenerateQrCodeReq): Promise<SgVerifyGenerateQrCodeRes> {
     return this.sgVerify.generateQrCodeUrl(req);
   }
 

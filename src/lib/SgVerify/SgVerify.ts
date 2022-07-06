@@ -51,6 +51,6 @@ export class SgVerify {
       `&v=${version}`
     ].join('');
 
-    return this.signUrl(url);
+    return { url: this.signUrl(url), expiryTimestamp: expiry.getTime() };
   }
 }

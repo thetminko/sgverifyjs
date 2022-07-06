@@ -4,4 +4,7 @@ export interface SgVerifyGenerateQrCodeReq {
   qrCodeExpiryInSec?: number;
 }
 
-export type SgVerifyGenerateQrCodeRes = string;
+export type SgVerifyGenerateQrCodeRes = {
+  url: string;
+  expiryTimestamp: number;
+};
