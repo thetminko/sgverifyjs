@@ -18,7 +18,7 @@ export class MyInfoPerson {
             areaCode: areacode,
             value: nbr
           };
-        } else if (personKey === 'adddress') {
+        } else if (personKey === 'address') {
           const { block, building, floor, unit, street, postal, country } = data[key];
           this.person[personKey] = {
             country: {

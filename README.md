@@ -25,7 +25,7 @@ const personAttributes: MyInfoPersonAttributes[] = [
   MyInfoPersonAttributes.passType,
   MyInfoPersonAttributes.mobileNumber,
   MyInfoPersonAttributes.email,
-  MyInfoPersonAttributes.adddress
+  MyInfoPersonAttributes.address
 ];
 
 export class SgVerifyService extends SgVerifyConnector {

@@ -22,7 +22,7 @@ export enum MyInfoPersonAttributes {
   passExpiryDate = 'passexpirydate',
   mobileNumber = 'mobileno',
   email = 'email',
-  adddress = 'regadd',
+  address = 'regadd',
   employment = 'employment',
   drivingLicence = 'drivinglicence'
 }
