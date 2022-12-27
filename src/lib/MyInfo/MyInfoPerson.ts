@@ -22,15 +22,15 @@ export class MyInfoPerson {
           const { block, building, floor, unit, street, postal, country } = data[key];
           this.person[personKey] = {
             country: {
-              code: country.code,
-              value: country.desc
+              code: country?.code,
+              value: country?.desc
             },
-            block: block.value,
-            building: building.value,
-            floorNumber: floor.value,
-            unitNumber: unit.value,
-            street: street.value,
-            postalCode: postal.value
+            block: block?.value,
+            building: building?.value,
+            floorNumber: floor?.value,
+            unitNumber: unit?.value,
+            street: street?.value,
+            postalCode: postal?.value
           };
         } else if (personKey === 'drivingLicence') {
           const { qdl } = data[key];

@@ -1,5 +1,5 @@
 export class SortUtil {
-  static sortJSON<T>(json: T): T {
+  static sortJSON<T extends object>(json: T): T {
     const keys = Object.keys(json);
     keys.sort();
 
