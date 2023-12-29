@@ -31,7 +31,7 @@ export interface SgVerifyOptions {
   };
 
   /**
-   * The file path of the public cert that you get from SG Verify portal to verify the decrypted payload
+   * The public cert that you get from SG Verify portal to verify the decrypted payload
    * In utf-8 format string
    */
   myInfoPublicCert: string;

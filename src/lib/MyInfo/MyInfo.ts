@@ -101,7 +101,7 @@ export class MyInfo {
       this.options.logger?.debug(`Token url success`);
 
       if (data.code) {
-        throw new Error(`Error occured while getting token [${data.code}] [${data.message}]`);
+        throw new Error(`Error occurred while getting token. Response code [${data.code}] [${data.message}]`);
       }
 
       this.options.logger?.debug(`Decoding access token`);
@@ -116,7 +116,7 @@ export class MyInfo {
         decodedAccessToken
       };
     } catch (err) {
-      this.options.logger?.error(`Error occured while getting token [${err.message}]`);
+      this.options.logger?.error(`Error occurred while getting token [${err.message}]`);
       throw err;
     }
   }
