@@ -1,4 +1,4 @@
-
+# This library has been archived. Please fork it if you want to use it.
 
 # SgVerifyService.ts
 ```
